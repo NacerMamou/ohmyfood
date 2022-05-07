@@ -1,14 +1,25 @@
 {
   "name": "ohmyfood",
   "version": "1.0.0",
-  "description": "ohmyfood Restaurant website",
-  "main": "index.js",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "sass":"sass --watch ./sass/main.scss:./css/style.css ./sass/main1.scss:./css/style1.css ./sass/main2.scss:./css/style2.css ./sass/main3.scss:./css/style3.css ./sass/main4.scss:./css/style4.css --style expanded",
-    "prefix": "postcss ./css/style.css --use autoprefixer -d ./css/prefixed/"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
- 
-  "author": "Nacer Mamou",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NacerMamou/ohmyfood.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "browserslist": "last 4 versions"
+  "bugs": {
+    "url": "https://github.com/NacerMamou/ohmyfood/issues"
+  },
+  "homepage": "https://github.com/NacerMamou/ohmyfood#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1"
+  }
 }
