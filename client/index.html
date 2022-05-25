@@ -9,22 +9,20 @@
       src="https://kit.fontawesome.com/6e06be2705.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <title>Ohmyfood</title>
   </head>
 
   <body>
-    <header class="header">
-      <a href="./index.html" class="header__logo">
-        <img alt="homepage" src="images/logo/ohmyfood.png" />
-      </a>
+    <header id="header">
+      <a href="./index.html" class="logo"> Ohmyfood </a>
 
-      <div class="header__search">
-        <form class="header__search--area" action="" method="post">
+      <div class="search">
+        <form class="search__form" method="post">
           <i class="fas fa-map-marker-alt fas-search"></i>
           <input
             type="search"
-            class="header__search--input"
+            class="search__form__input"
             name="ville"
             id="ville"
             placeholder="Paris, Belleville"
@@ -32,96 +30,146 @@
         </form>
       </div>
 
-      <div class="header__exploration">
+      <div class="exploration">
         <h1>Réservez le menu qui vous convient</h1>
         <p>Découvrez des restaurants d'exception, séléctionés par nos soins</p>
         <a href="#">Explorer nos restaurants</a>
       </div>
     </header>
 
-    <section class="fonctionnement">
-      <h1>Fonctionnement</h1>
-      <div class="fonctionnement__menu">
-        <a href="#" class="fonctionnement__menu__link">
-          <div class="fonctionnement__menu__link__info">1</div>
+    <section id="fonctionnement">
+      <h2>Fonctionnement</h2>
+      <div class="menu">
+        <a href="#" class="menu__link">
+          <div class="menu__link__info">1</div>
           <i class="fas fa-mobile-alt"></i>
           Choisissez un restaurant
         </a>
-        <a href="#" class="fonctionnement__menu__link">
-          <div class="fonctionnement__menu__link__info">2</div>
+        <a href="#" class="menu__link">
+          <div class="menu__link__info">2</div>
           <i class="fas fa-list-ul"></i>
           Composez votre menu
         </a>
-        <a href="#" class="fonctionnement__menu__link--active">
-          <div class="fonctionnement__menu__link--active__info">3</div>
+        <a href="#" class="menu__link--active">
+          <div class="menu__link--active__info">3</div>
           <i class="fa-solid fa-utensils"></i>
           Dégustez au restaurant
         </a>
       </div>
     </section>
 
-    <section class="restaurants">
-      <h1>Restaurants</h1>
-      <div class="restaurants__presentation">
-        <a href="index1.html" class="restaurants__presentation--topic new">
+    <section id="restaurants">
+      <h2>Restaurants</h2>
+      <div class="presentation">
+        <a
+          href="la-pallete-du-gout.html"
+          class="presentation__topic new"
+        >
           <img
             src="images/restaurants/jay-wennington-N_Y88TWmGwA-unsplash.jpg"
             alt="main table"
           />
-          <div class="restaurants__presentation--topic--bottom">
-            <div>
-              <h2>La palette du gout</h2>
+          <div class="presentation__topic__header">
+            <div class="presentation__topic__header__text">
+              <h3>La palette du gout</h3>
               <p>Ménilmontant</p>
             </div>
-            <i class="far fa-heart"></i>
+            <div class="presentation__topic__header__icon">
+              <i
+                class="fa-regular fa-heart layer0"
+              ></i>
+              <i
+                class="fa-solid fa-heart layer1"
+              ></i>
+            </div>
           </div>
         </a>
-        <a href="index2.html" class="restaurants__presentation--topic new">
-          <img src="images/restaurants/stil-u2Lp8tXIcjw-unsplash.jpg" />
-          <div class="restaurants__presentation--topic--bottom">
-            <div>
-              <h2>La note enchantée</h2>
+
+        <a
+          href="la-note-enchatee.html"
+          class="presentation__topic new"
+        >
+          <img
+            src="images/restaurants/stil-u2Lp8tXIcjw-unsplash.jpg"
+            alt="image du restaurant la note enchantée"
+          />
+          <div class="presentation__topic__header">
+            <div class="presentation__topic__header__text">
+              <h3>La note enchantée</h3>
               <p>Charonne</p>
             </div>
-            <i class="far fa-heart"></i>
+            <div class="presentation__topic__header__icon">
+              <i
+                class="fa-regular fa-heart layer0"
+              ></i>
+              <i
+                class="fa-solid fa-heart layer1"
+              ></i>
+            </div>
           </div>
         </a>
-        <a href="index3.html" class="restaurants__presentation--topic">
-          <img src="images/restaurants/toa-heftiba-DQKerTsQwi0-unsplash.jpg" />
-          <div class="restaurants__presentation--topic--bottom">
-            <div>
-              <h2>A la Française</h2>
+
+        <a
+          href="a-la-francaise.html"
+          class="presentation__topic new"
+        >
+          <img
+            src="images/restaurants/toa-heftiba-DQKerTsQwi0-unsplash.jpg"
+            alt="image du restaurant à la Française"
+          />
+          <div class="presentation__topic__header">
+            <div class="presentation__topic__header__text">
+              <h3>A la Française</h3>
               <p>Cité rouge</p>
             </div>
-            <i class="far fa-heart"></i>
+            <div class="presentation__topic__header__icon">
+              <i
+                class="fa-regular fa-heart layer0"
+              ></i>
+              <i
+                class="fa-solid fa-heart layer1"
+              ></i>
+            </div>
           </div>
         </a>
-        <a href="index4.html" class="restaurants__presentation--topic">
+
+        <a
+          href="le-delice-des-sens.html"
+          class="presentation__topic new"
+        >
           <img
             src="images/restaurants/louis-hansel-shotsoflouis-qNBGVyOCY8Q-unsplash.jpg"
+            alt="image du restaurant le délice des sens"
           />
-          <div class="restaurants__presentation--topic--bottom">
-            <div>
-              <h2>Le délice des sens</h2>
+          <div class="presentation__topic__header">
+            <div class="presentation__topic__header__text">
+              <h3>Le délice des sens</h3>
               <p>Folie-Méricour</p>
             </div>
-            <i class="far fa-heart"></i>
+            <div class="presentation__topic__header__icon">
+              <i
+                class="fa-regular fa-heart  layer0"
+              ></i>
+              <i
+                class="fa-solid fa-heart  layer1"
+              ></i>
+            </div>
           </div>
         </a>
       </div>
     </section>
 
-    <footer class="footer">
-      <h1>ohmyfood</h1>
-      <div class="footer__list">
-        <a href="#" class="footer__list--link">
+    <footer id="footer">
+      <h2 class="logo">ohmyfood</h2>
+      <div class="list">
+        <a href="#" class="list__link">
           <i class="fas fa-utensils"></i> Proposer un restaurant
         </a>
-        <a href="#" class="footer__list--link">
+        <a href="#" class="list__link">
           <i class="far fa-handshake"></i>Devenir partenaire
         </a>
-        <a href="#" class="footer__list--link">Mentions légales</a>
-        <a href="#" class="footer__list--link">Contact</a>
+        <a href="#" class="list__link">Mentions légales</a>
+        <a href="#" class="list__link">Contact</a>
       </div>
     </footer>
   </body>

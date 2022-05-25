@@ -4,11 +4,12 @@
   "description": "ohmyfood Restaurant website",
   "main": "index.js",
   "scripts": {
-    "sass":"sass --watch ./sass/main.scss:./css/style.css ./sass/main1.scss:./css/style1.css ./sass/main2.scss:./css/style2.css ./sass/main3.scss:./css/style3.css ./sass/main4.scss:./css/style4.css --style expanded",
-    "prefix": "postcss ./css/style.css --use autoprefixer -d ./css/prefixed/"
+    "sass": "sass --watch ./sass/main.scss:./css/main.css --style expanded",
+    "prefix": "postcss ./css/main.css --use autoprefixer -d ./css/prefixed",
+    "updateBrowserList": "npx browserslist@latest --update-db"
   },
- 
   "author": "Nacer Mamou",
   "license": "ISC",
-  "browserslist": "last 4 versions"
+  "browserslist": "last 4 versions",
+  "dependencies": {}
 }
