@@ -38,11 +38,11 @@ $topic-anim-duration: 0.85s;
 $topic-anim-delay: 0.25s;
 $entrees-topics-number: 3;
 $entrees-anim-time: (($entrees-topics-number - 1) * $topic-anim-delay) +
-  $topic-anim-duration/2;
+  ($topic-anim-duration/2);
 
 $plats-topics-number: 3;
 $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
-  $topic-anim-duration/2;
+  ($topic-anim-duration/2);
 
 @keyframes loading {
   0% {
@@ -53,6 +53,47 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
     opacity: 1;
     transform: translateY(0%);
     visibility: visible;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+    visibility: hidden;
+  }
+}
+@keyframes hide {
+  0% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+
+#loader{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.9);
+  animation: hide 2s forwards;
+  .turning-border{
+    display: flex;
+    position: relative;
+    z-index: 6;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 9px solid $color-primary;
+    border-top: 9px solid $color-secondary;
+    animation: spin 0.5s linear 4 forwards;
   }
 }
 
@@ -201,6 +242,7 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
     flex-direction: column;
     align-items: center;
     width: 87%;
+    z-index: 0;
     &__link {
       display: flex;
       position: relative;
@@ -215,6 +257,7 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
       border-radius: 5vw;
       box-shadow: 1vw 1.5vw 2vw gainsboro;
       text-decoration: none;
+      z-index: 0;
       &__info {
         display: flex;
         align-items: center;
@@ -228,6 +271,7 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
         font-size: 4vw;
         top: 30%;
         left: -3.5vw;
+        z-index: 0;
       }
       & i {
         display: flex;
@@ -511,45 +555,24 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
       &:nth-child(n + 4) {
         animation-delay: ($topic-anim-delay * 3);
       }
-      &:hover .entrees--topic--presentation {
-        width: 65%;
-      }
-      &:hover .entrees--topic--price {
-        width: 35%;
-        transform: translateX(0%);
-        & span {
-          width: 25%;
-          transform: translateX(0%);
-        }
-        & .entrees--topic--price--back {
-          width: 75%;
-          background-color: $color-animation;
-          & i {
-            color: white;
-            background-color: $color-animation;
-            transform: rotate(0deg) scale(1);
-          }
-        }
-      }
+
       &--presentation {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-left: 2vw;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        overflow: hidden;
+        padding-left: 3vw;
         width: 80%;
         transition: all $on-hover-anim-duration ease-in-out;
-
         & h3 {
+          display: block;
           font-size: 3.9vw;
+          margin-bottom: 0.8vw;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          font-weight: 900;
         }
         & p {
+          display: block;
           font-size: 3.5vw;
           color: gray;
           overflow: hidden;
@@ -560,39 +583,68 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
       &--price {
         border-radius: 0 4vw 4vw 0;
         display: flex;
-        padding-bottom: 3vw;
+        align-items: center;
         width: $price-width;
         color: black;
         width: 20%;
-        height: 18.4vw;
+        height: 100%;
         font-weight: bold;
-        transform: translateX(76%);
+        transform: translateX(20%);
         transition: all $on-hover-anim-duration ease-in-out;
         & span {
           display: flex;
-          justify-content: left;
-          width: 90%;
-          height: 18.4vw;
+          justify-content: flex-end;
           align-items: flex-end;
-          padding-bottom: 3vw;
+          width: 100%;
+          height: 100%;
+          padding-bottom: 2vw;
+          padding-right: 15vw;
           font-size: 4vw;
-          transform: translateX(-70%);
+          transform: translateX(0%);
           transition: all $on-hover-anim-duration ease-in-out;
         }
         &--back {
           display: flex;
-          width: 10%;
-          justify-content: center;
           align-items: center;
-          height: 18.4vw;
+          justify-content: center;
+          width: 0%;
+          height: 100%;
           background-color: $color-animation;
           transition: all $on-hover-anim-duration ease-in-out;
           & i {
-            font-size: 8vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 9vw;
             color: $color-animation;
+            color: white;
             background: transparent;
-            transform: rotate(-1500deg) scale(0.25);
+            transform: rotate(-1300deg) scale(0.25);
             transition: all $on-hover-anim-duration ease-in-out;
+          }
+        }
+      }
+      &:hover .entrees--topic--presentation {
+        width: 65%;
+      }
+      &:hover .entrees--topic--price {
+        width: 35%;
+        transform: translateX(0%);
+        & span {
+          width: 30%;
+          transform: translateX(0%);
+          padding-right: 2vw;
+          padding-bottom: 2vw;
+        }
+        & .entrees--topic--price--back {
+          width: 70%;
+          background-color: $color-animation;
+
+          & i {
+            color: white;
+            background-color: $color-animation;
+            transform: rotate(0deg) scale(1);
           }
         }
       }
@@ -640,40 +692,15 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
         animation-delay: ($entrees-anim-time)+ ($topic-anim-delay * 2);
       }
 
-      &:hover .plats--topic--presentation {
-        width: 65%;
-      }
-      &:hover .plats--topic--price {
-        width: 35%;
-        transform: translateX(0%);
-        & span {
-          width: 25%;
-          transform: translateX(0%);
-        }
-        & .plats--topic--price--back {
-          width: 75%;
-          background-color: $color-animation;
-
-          & i {
-            color: white;
-            background-color: $color-animation;
-            transform: rotate(0deg) scale(1);
-          }
-        }
-      }
-
       &--presentation {
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding-left: 3vw;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        overflow: hidden;
         width: 80%;
         transition: all $on-hover-anim-duration ease-in-out;
-
         & h3 {
+          display: block;
           font-size: 3.9vw;
           margin-bottom: 0.8vw;
           overflow: hidden;
@@ -681,6 +708,7 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
           white-space: nowrap;
         }
         & p {
+          display: block;
           font-size: 3.5vw;
           color: gray;
           overflow: hidden;
@@ -691,39 +719,68 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
       &--price {
         border-radius: 0 4vw 4vw 0;
         display: flex;
-        padding-bottom: 3vw;
+        align-items: center;
         width: $price-width;
         color: black;
         width: 20%;
-        height: 18.4vw;
+        height: 100%;
         font-weight: bold;
-        transform: translateX(76%);
+        transform: translateX(20%);
         transition: all $on-hover-anim-duration ease-in-out;
         & span {
           display: flex;
-          justify-content: left;
-          width: 90%;
-          height: 18.4vw;
+          justify-content: flex-end;
           align-items: flex-end;
-          padding-bottom: 3vw;
+          width: 100%;
+          height: 100%;
+          padding-bottom: 2vw;
+          padding-right: 15vw;
           font-size: 4vw;
-          transform: translateX(-70%);
+          transform: translateX(0%);
           transition: all $on-hover-anim-duration ease-in-out;
         }
         &--back {
           display: flex;
-          width: 10%;
-          justify-content: center;
           align-items: center;
-          height: 18.4vw;
+          justify-content: center;
+          width: 0%;
+          height: 100%;
           background-color: $color-animation;
           transition: all $on-hover-anim-duration ease-in-out;
           & i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
             font-size: 9vw;
             color: $color-animation;
+            color: white;
             background: transparent;
-            transform: rotate(-1300deg) scale(1);
+            transform: rotate(-1300deg) scale(0.25);
             transition: all $on-hover-anim-duration ease-in-out;
+          }
+        }
+      }
+      &:hover .plats--topic--presentation {
+        width: 65%;
+      }
+      &:hover .plats--topic--price {
+        width: 35%;
+        transform: translateX(0%);
+        & span {
+          width: 30%;
+          transform: translateX(0%);
+          padding-right: 2vw;
+          padding-bottom: 2vw;
+        }
+        & .plats--topic--price--back {
+          width: 70%;
+          background-color: $color-animation;
+
+          & i {
+            color: white;
+            background-color: $color-animation;
+            transform: rotate(0deg) scale(1);
           }
         }
       }
@@ -773,46 +830,23 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
         animation-delay: ($entrees-anim-time + $plats-anim-time)+ ($topic-anim-delay *
               2);
       }
-      &:hover .desserts--topic--presentation {
-        width: 65%;
-      }
-      &:hover .desserts--topic--price {
-        width: 35%;
-        transform: translateX(0%);
-        & span {
-          width: 25%;
-          transform: translateX(0%);
-        }
-        & .desserts--topic--price--back {
-          width: 75%;
-          background-color: $color-animation;
-
-          & i {
-            color: white;
-            background-color: $color-animation;
-            transform: rotate(0deg) scale(1);
-          }
-        }
-      }
-
       &--presentation {
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding-left: 3vw;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        overflow: hidden;
         width: 80%;
         transition: all $on-hover-anim-duration ease-in-out;
-
         & h3 {
+          display: block;
           font-size: 3.9vw;
+          margin-bottom: 0.8vw;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         & p {
+          display: block;
           font-size: 3.5vw;
           color: gray;
           overflow: hidden;
@@ -823,39 +857,68 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
       &--price {
         border-radius: 0 4vw 4vw 0;
         display: flex;
-        padding-bottom: 3vw;
+        align-items: center;
         width: $price-width;
         color: black;
         width: 20%;
-        height: 18.4vw;
+        height: 100%;
         font-weight: bold;
-        transform: translateX(76%);
+        transform: translateX(20%);
         transition: all $on-hover-anim-duration ease-in-out;
         & span {
           display: flex;
-          justify-content: left;
-          width: 90%;
-          height: 18.4vw;
+          justify-content: flex-end;
           align-items: flex-end;
-          padding-bottom: 3vw;
+          width: 100%;
+          height: 100%;
+          padding-bottom: 2vw;
+          padding-right: 15vw;
           font-size: 4vw;
-          transform: translateX(-70%);
+          transform: translateX(0%);
           transition: all $on-hover-anim-duration ease-in-out;
         }
         &--back {
           display: flex;
-          width: 10%;
-          justify-content: center;
           align-items: center;
-          height: 18.4vw;
+          justify-content: center;
+          width: 0%;
+          height: 100%;
           background-color: $color-animation;
           transition: all $on-hover-anim-duration ease-in-out;
           & i {
-            font-size: 8vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 9vw;
             color: $color-animation;
+            color: white;
             background: transparent;
-            transform: rotate(-1500deg) scale(0.25);
+            transform: rotate(-1300deg) scale(0.25);
             transition: all $on-hover-anim-duration ease-in-out;
+          }
+        }
+      }
+      &:hover .desserts--topic--presentation {
+        width: 65%;
+      }
+      &:hover .desserts--topic--price {
+        width: 35%;
+        transform: translateX(0%);
+        & span {
+          width: 30%;
+          transform: translateX(0%);
+          padding-right: 2vw;
+          padding-bottom: 2vw;
+        }
+        & .desserts--topic--price--back {
+          width: 70%;
+          background-color: $color-animation;
+
+          & i {
+            color: white;
+            background-color: $color-animation;
+            transform: rotate(0deg) scale(1);
           }
         }
       }
@@ -866,19 +929,25 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    height: 13vw;
-    border: none;
-    border-radius: 12vw;
-    font-size: 4.5vw;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(0deg, $color-primary, $color-secondary);
+    width: 100%;
     margin-top: 10vw;
     margin-bottom: 22vw;
-    transition: 0.5s all ease-in-out;
-    &:hover {
-      transform: scale(1.15);
+    & button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
+      padding: 3.5vw 0;
+      border: none;
+      font-size: 4.5vw;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(0deg, $color-primary, $color-secondary);
+      transition: 0.5s all ease-in-out;
+      border-radius: 12vw;
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
 }
@@ -943,22 +1012,21 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
     .exploration {
       flex-direction: row;
       align-items: flex-start;
-      padding-top: 4vw;
-      padding-bottom: 4vw;
+      padding: 3vw 0;
       flex-wrap: wrap;
       & h1 {
-        font-size: 4vw;
+        font-size: 3.5vw;
         margin-bottom: 2vw;
       }
       & p {
-        font-size: 3vw;
-        width: 50%;
+        font-size: 2.5vw;
+        width: 45%;
         margin-bottom: 0;
       }
       & a {
-        font-size: 3vw;
-        padding: 3vw;
-        width: 40%;
+        font-size: 2.2vw;
+        padding: 2vw;
+        width: 30%;
       }
     }
     .img {
@@ -1095,15 +1163,266 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
       }
     }
   }
+
   #list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 5vw 5vw 0 0;
+    padding: 1vw 3vw;
+    margin-top: -5vw;
+    width: 100%;
+    height: auto;
+    .title {
+      width: 100%;
+      align-items: center;
+      & h1 {
+        font-size: 4.8vw;
+        padding: 1vw 0;
+      }
+      &__icon {
+        height: 100%;
+        width: 16%;
+        & i {
+          font-size: 4vw;
+          width: 10%;
+          height: 5%;
+          // &.layer0 {
+          // }
+          // &.layer1 {
+          // }
+          // &:hover {
+          //   &.layer0 {
+          //   }
+          //   &.layer1 {
+          //   }
+          // }
+        }
+      }
+    }
+
+    .entrees {
+      width: 49%;
+      padding: 2vw 0vw;
+      & h2 {
+        font-size: 2.5vw;
+        padding-bottom: 2.5vw;
+        position: relative;
+        font-weight: 400;
+      }
+      & h2::after {
+        width: 12%;
+        border-top: 0.45vw solid $color-animation;
+        top: 65%;
+      }
+
+      &--topic {
+        width: 100%;
+        height: 8vw;
+        margin-bottom: 1vw;
+        border-radius: 1.2vw;
+
+        &--presentation {
+          padding-left: 2vw;
+          width: 80%;
+          & h3 {
+            font-size: 2.5vw;
+          }
+          & p {
+            font-size: 2vw;
+          }
+        }
+        &--price {
+          width: 20%;
+          transform: translateX(40%);
+          & span {
+            width: 100%;
+            font-size: 2vw;
+            padding-bottom: 1vw;
+            padding-right: 6vw;
+          }
+          &--back {
+            width: 0%;
+            & i {
+              font-size: 4vw;
+            }
+          }
+        }
+        &:hover .entrees--topic--presentation {
+          width: 65%;
+        }
+        &:hover .entrees--topic--price {
+          width: 35%;
+          & span {
+            padding-right: 0.5vw;
+            padding-bottom: 1vw;
+            width: 35%;
+          }
+          & .entrees--topic--price--back {
+            width: 65%;
+            background-color: $color-animation;
+            & i {
+            }
+          }
+        }
+      }
+    }
+    .plats {
+      width: 49%;
+      padding: 2vw 0vw;
+      & h2 {
+        font-size: 2.5vw;
+        padding-bottom: 2.5vw;
+        position: relative;
+        font-weight: 400;
+      }
+      & h2::after {
+        width: 9%;
+        border-top: 0.45vw solid $color-animation;
+        top: 65%;
+      }
+
+      &--topic {
+        width: 100%;
+        height: 8vw;
+        margin-bottom: 1vw;
+        border-radius: 1.2vw;
+
+        &--presentation {
+          padding-left: 2vw;
+          width: 80%;
+          & h3 {
+            font-size: 2.5vw;
+          }
+          & p {
+            font-size: 2vw;
+          }
+        }
+        &--price {
+          width: 20%;
+          transform: translateX(40%);
+          & span {
+            width: 100%;
+            font-size: 2vw;
+            padding-bottom: 1vw;
+            padding-right: 6vw;
+          }
+          &--back {
+            width: 0%;
+            & i {
+              font-size: 4vw;
+            }
+          }
+        }
+        &:hover .plats--topic--presentation {
+          width: 65%;
+        }
+        &:hover .plats--topic--price {
+          width: 35%;
+          & span {
+            width: 35%;
+            padding-right: 0.5vw;
+            padding-bottom: 1vw;
+          }
+          & .plats--topic--price--back {
+            width: 65%;
+            background-color: $color-animation;
+            & i {
+            }
+          }
+        }
+      }
+    }
+    .desserts {
+      width: 100%;
+      padding: 2vw 0vw;
+      & h2 {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        font-size: 2.5vw;
+        padding-bottom: 2.5vw;
+        position: relative;
+        font-weight: 400;
+      }
+      & h2::after {
+        width: 6.5%;
+        border-top: 0.45vw solid $color-animation;
+        top: 65%;
+        left: 43.8%;
+      }
+
+      &--topic {
+        width: 100%;
+        height: 8vw;
+        margin-bottom: 1vw;
+        border-radius: 1.2vw;
+
+        &--presentation {
+          padding-left: 2vw;
+          width: 80%;
+          & h3 {
+            font-size: 2.5vw;
+          }
+          & p {
+            font-size: 2vw;
+          }
+        }
+        &--price {
+          width: 20%;
+          
+          & span {
+            width: 100%;
+            font-size: 2vw;
+            padding-bottom: 1vw;
+            padding-right: 6vw;
+          }
+          &--back {
+            width: 0%;
+            & i {
+              font-size: 4vw;
+            }
+          }
+        }
+        &:hover .desserts--topic--presentation {
+          width: 84%;
+        }
+        &:hover .desserts--topic--price {
+          width: 16%;
+          & span {
+            padding-right: 0.5vw;
+            padding-bottom: 1vw;
+          }
+          & .desserts--topic--price--back {
+            background-color: $color-animation;
+            & i {
+            }
+          }
+        }
+      }
+    }
+
+    .button {
+      width: 100%;
+      margin: 5vw 0;
+      & button {
+        width: auto;
+        padding: 2vw 5vw;
+        font-size: 2.2vw;
+        border-radius: 5vw;
+        &:hover {
+        }
+      }
+    }
   }
+
   #footer {
     width: 100%;
     background-color: $footer-background;
-    padding: 3vw 4.5vw;
+    padding: 2.5vw 4.5vw;
     .logo {
-      font-size: 4.5vw;
-      margin-bottom: 2.5vw;
+      font-size: 4vw;
+      margin-bottom: 2.2vw;
     }
     .list {
       flex-direction: row;
@@ -1113,9 +1432,438 @@ $plats-anim-time: (($plats-topics-number - 1) * $topic-anim-delay) +
       &__link {
         width: 50%;
         margin-bottom: 1.5vw;
-        font-size: 2.5vw;
+        font-size: 2.2vw;
         & i {
-          padding-right: 3vw;
+          padding-right: 2vw;
+        }
+      }
+    }
+  }
+}
+
+
+@media all and (min-width: 1025px) {
+  #header {
+    .logo {
+      padding: 0.1vw 0;
+      font-size: 2.2vw;
+      & a {
+        font-size: 2vw;
+        width: 5.5%;
+      }
+    }
+    .search {
+      border-top: 0.15vw solid gainsboro;
+      &__form {
+        width: 25%;
+      }
+      & i {
+        width: 20%;
+        font-size: 1vw;
+        padding: 0.7vw 0;
+      }
+      & input {
+        padding: 0.5vw 0;
+        font-size: 1vw;
+        font-weight: 500;
+      }
+      & input::placeholder {
+        font-size: 1vw;
+      }
+    }
+
+    .exploration {
+      flex-direction: column;
+      padding: 2.5vw 7vw;
+      flex-wrap: wrap;
+      position: relative;
+      & h1 {
+        justify-content: flex-start;
+        font-size: 1.8vw;
+        padding: 0;
+        margin: 0;
+      }
+      & p {
+        justify-content: flex-start;
+        font-size: 1.2vw;
+        width: 100.5%;
+        margin:0;
+      }
+      & a {
+        position: absolute;
+        top: 27%;
+        right: 8vw;
+        font-size: 1vw;
+        padding: 0.8vw 0vw;
+        width: 13.5%;
+      }
+    }
+    .img {
+      width: 100%;
+      height: 25vw;
+      object-fit: cover;
+    }
+  }
+
+  #fonctionnement {
+    padding: 2vw 7vw;
+    & h2 {
+      font-size: 2vw;
+      padding-left: 0vw;
+      margin-bottom: 0.6vw;
+      width: 100%;
+    }
+    .menu {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      &__link {
+        width: 30.5%;
+        margin-bottom: 0vw;
+        font-size: 1.2vw;
+        border-radius: 0.8vw;
+        height: 5vw;
+        
+        &__info {
+          font-size: 1.3vw;
+          top: 27%;
+          left: -1.4vw;
+          height: 2.5vw;
+          width: 2.5vw;
+        }
+        & i {
+          font-size: 1.5vw;
+          padding-left: 2.8vw;
+          padding-right: 1vw;
+        }
+      }
+      &__link--active {
+        width: 30.5%;
+        margin-bottom: 0vw;
+        font-size: 1.2vw;
+        border-radius: 0.8vw;
+        height: 5vw;
+        &__info {
+          font-size: 1.3vw;
+          top: 27%;
+          left: -1.4vw;
+          height: 2.5vw;
+          width: 2.5vw;
+        }
+        & i {
+          font-size: 1.5vw;
+          padding-left: 2.8vw;
+          padding-right: 1vw;
+        }
+      }
+    }
+  }
+
+  #restaurants {
+    width: 100%;
+    padding: 2.5vw 7vw;
+    & h2 {
+      padding-left: 0vw;
+      font-size: 2vw;
+      margin-bottom: 1.4vw;
+    }
+    .presentation {
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 0 0vw;
+      height: auto;
+      &__topic {
+        width: 31.5%;
+        height: 19vw;
+        margin-bottom: 2.2vw;
+        &.new::before {
+          padding: 0vw 0.5vw;
+          height: 10%;
+          border-radius: 0.3vw;
+          right: 3.5%;
+          margin-top: 1vw;
+          font-size: 1vw;
+        }
+        & img {
+          border-radius: 1vw 1vw 0vw 0vw;
+        }
+        &__header {
+          &__text {
+            border-radius: 0 0 0 1vw;
+            padding: 1vw 1vw;
+            & h3 {
+              font-size: 1.5vw;
+            }
+            & p {
+              font-size: 1.2vw;
+            }
+          }
+          &__icon {
+            border-radius: 0 0 1vw 0;
+            & i {
+              font-size: 1.7vw;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #list {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    border-radius: 2.5vw 2.5vw 0 0;
+    padding: 2vw 7vw;
+    margin-top: -6vw;
+    .title {
+      & h1 {
+        font-size: 2.2vw;
+        padding: 0vw 0;
+      }
+      &__icon {
+        height: 100%;
+        width: 4%;
+        & i {
+          font-size: 2vw;
+          width: 10%;
+          height: 5%;
+        }
+      }
+    }
+
+    .entrees {
+      width: 31%;
+      padding: 1vw 0vw;
+      & h2 {
+        font-size: 1.1vw;
+        padding-bottom: 1.3vw;
+        position: relative;
+        font-weight: 400;
+      }
+      & h2::after {
+        width: 9.5%;
+        border-top: 0.2vw solid $color-animation;
+        top: 58%;
+      }
+
+      &--topic {
+        height: 4vw;
+        margin-bottom: 1vw;
+        border-radius: 0.6vw;
+
+        &--presentation {
+          padding-left: 1vw;
+          width: 80%;
+          & h3 {
+            font-size: 1.2vw;
+            margin-bottom: 0vw;
+            
+          }
+          & p {
+            font-size: 1vw;
+          }
+        }
+        &--price {
+          width: 20%;
+          transform: translateX(40%);
+          & span {
+            font-size: 1vw;
+            padding-bottom: 0.6vw;
+            padding-right: 6vw;
+          }
+          &--back {
+            width: 0%;
+            & i {
+              font-size: 2vw;
+            }
+          }
+        }
+        &:hover .entrees--topic--presentation {
+          width: 70%;
+        }
+        &:hover .entrees--topic--price {
+          width: 30%;
+          & span {
+            padding-right: 0.5vw;
+            padding-bottom: 0.6vw;
+            width: 35%;
+          }
+          & .entrees--topic--price--back {
+            width: 65%;
+            background-color: $color-animation;
+            & i {
+            }
+          }
+        }
+      }
+    }
+    .plats {
+      width: 31%;
+      padding: 1vw 0vw;
+      & h2 {
+        font-size: 1.1vw;
+        padding-bottom: 1.3vw;
+        position: relative;
+        font-weight: 400;
+      }
+      & h2::after {
+        width: 6.5%;
+        border-top: 0.2vw solid $color-animation;
+        top: 58%;
+      }
+
+      &--topic {
+        height: 4vw;
+        margin-bottom: 1vw;
+        border-radius: 0.6vw;
+
+        &--presentation {
+          padding-left: 1vw;
+          width: 80%;
+          & h3 {
+            font-size: 1.2vw;
+            margin-bottom: 0vw;
+            
+          }
+          & p {
+            font-size: 1vw;
+          }
+        }
+        &--price {
+          width: 20%;
+          transform: translateX(40%);
+          & span {
+            font-size: 1vw;
+            padding-bottom: 0.6vw;
+            padding-right: 6vw;
+          }
+          &--back {
+            width: 0%;
+            & i {
+              font-size: 2vw;
+            }
+          }
+        }
+        &:hover .plats--topic--presentation {
+          width: 70%;
+        }
+        &:hover .plats--topic--price {
+          width: 30%;
+          & span {
+            padding-right: 0.5vw;
+            padding-bottom: 0.6vw;
+            width: 35%;
+          }
+          & .plats--topic--price--back {
+            width: 65%;
+            background-color: $color-animation;
+            & i {
+            }
+          }
+        }
+      }
+    }
+    .desserts {
+      width: 31%;
+      padding: 1vw 0vw;
+      & h2 {
+        font-size: 1.1vw;
+        padding-bottom: 1.3vw;
+        position: relative;
+        font-weight: 400;
+        justify-content: flex-start;
+      }
+      & h2::after {
+        width: 10%;
+        border-top: 0.2vw solid $color-animation;
+        top: 58%;
+        left: 0;
+      }
+
+      &--topic {
+        height: 4vw;
+        margin-bottom: 1vw;
+        border-radius: 0.6vw;
+
+        &--presentation {
+          padding-left: 1vw;
+          width: 80%;
+          & h3 {
+            font-size: 1.2vw;
+            margin-bottom: 0vw;
+            
+          }
+          & p {
+            font-size: 1vw;
+          }
+        }
+        &--price {
+          width: 20%;
+          transform: translateX(40%);
+          & span {
+            font-size: 1vw;
+            padding-bottom: 0.6vw;
+            padding-right: 6vw;
+          }
+          &--back {
+            width: 0%;
+            & i {
+              font-size: 2vw;
+            }
+          }
+        }
+        &:hover .desserts--topic--presentation {
+          width: 70%;
+        }
+        &:hover .desserts--topic--price {
+          width: 30%;
+          & span {
+            padding-right: 0.5vw;
+            padding-bottom: 0.6vw;
+            width: 35%;
+          }
+          & .desserts--topic--price--back {
+            width: 65%;
+            background-color: $color-animation;
+            & i {
+            }
+          }
+        }
+      }
+    }
+
+    .button {
+      width: 100%;
+      margin: 1vw 0;
+      & button {
+        width: auto;
+        padding: 0.6vw 3vw;
+        font-size: 1.3vw;
+        border-radius: 1.5vw;
+        &:hover {
+        }
+      }
+    }
+  }
+
+  #footer {
+    padding: 1.5vw 7vw;
+    .logo {
+      font-size: 2vw;
+      margin-bottom: 0.6vw;
+    }
+    .list {
+      justify-content: space-between;
+      &__link {
+        width: 32%;
+        margin-bottom: 0.5vw;
+        font-size: 1.2vw;
+        & i {
+          padding-right: 1vw;
+          font-size: 1vw;
         }
       }
     }
