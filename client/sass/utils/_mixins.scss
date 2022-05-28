@@ -1,38 +1,868 @@
-@mixin heading-shadow($colour:lightness-shift($colour-primary), $offset: $heading-shadow-size){
-    text-shadow: $offset $offset $colour;
-}
+@use "sass:math";
 
-@mixin border($colour:$colour-primary) {
-    border: .1rem solid $colour;
-}
+@mixin listStyle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $grey-background2;
+  border-radius: 10vw 10vw 0 0;
+  padding-top: 5vw;
+  margin-top: -14vw;
+  width: 100%;
+  .title {
+    display: flex;
+    justify-content: space-between;
+    width: 92%;
+    align-items: center;
 
-@mixin img-ratio {
+    & h1 {
+      display: flex;
+      font-family: "Shrikhand", sans-serif;
+      font-size: 6.8vw;
+      padding-left: 2.5vw;
+    }
+    &__icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 16%;
+      & i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        font-size: 6vw;
+        width: 13%;
+        height: 7%;
+        @include iconHoverEffect;
+      }
+    }
+  }
+
+  @media all and (min-width: 576px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 5vw 5vw 0 0;
+    padding: 1vw 3vw;
+    margin-top: -5vw;
     width: 100%;
-        display: block;
-        overflow: hidden;
-        padding-top: 56.25%;
-        position: relative;
-        & img {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            transform: translate(-50%, -50%);
+    height: auto;
+    .title {
+      width: 100%;
+      align-items: center;
+      & h1 {
+        font-size: 4.8vw;
+        padding: 1vw 0;
+      }
+      &__icon {
+        height: 100%;
+        width: 16%;
+        & i {
+          font-size: 4vw;
+          width: 10%;
+          height: 5%;
         }
+      }
+    }
+  }
+
+  @media all and (min-width: 1025px) {
+    align-items: flex-start;
+    border-radius: 2.5vw 2.5vw 0 0;
+    padding: 2vw 7vw;
+    margin-top: -6vw;
+    .title {
+      & h1 {
+        font-size: 2.2vw;
+        padding: 0vw 0;
+      }
+      &__icon {
+        height: 100%;
+        width: 4%;
+        & i {
+          font-size: 2vw;
+          width: 10%;
+          height: 5%;
+        }
+      }
+    }
+  }
 }
 
-@mixin btn {
-    padding: $grid-gutter;
-    @include border;
-    color: $colour-primary;
-    background: $colour-secondary;
-    cursor: pointer;
-    &:hover{
-        background: $colour-primary;
-        color: $colour-accent;
+@keyframes loading {
+  0% {
+    opacity: 0;
+    transform: translateY(15%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+    visibility: visible;
+  }
+}
+
+@mixin foodContainer(
+  $name: "entrees",
+  $titleUnderlineWidth: 9%,
+  $foodContainerDelay: false
+) {
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  padding-top: 5vw;
+  & h2 {
+    font-size: 3.8vw;
+    color: grey;
+    padding-bottom: 4.5vw;
+    position: relative;
+    font-weight: 400;
+  }
+  & h2::after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    border-top: 0.7vw solid $color-animation;
+    top: 60%;
+    left: 0%;
+    @if $name == "entrees" {
+      width: 9%;
     }
-    &--full-width {
+    @if $name == "plats" {
+      width: 7%;
+    }
+    @if $name == "desserts" {
+      width: 10%;
+    }
+  }
+
+  &--topic {
+    display: flex;
+    width: 100%;
+    height: $topic-height;
+    margin-bottom: 2vw;
+    background-color: white;
+    border-radius: $topic-bd-radius;
+    overflow: hidden;
+    animation: loading $topic-anim-duration linear 1 forwards;
+    // animation-fill-mode: forwards;
+    visibility: hidden;
+
+    &:nth-child(n + 1) {
+      @if ($foodContainerDelay) and ($name == "plats") {
+        animation-delay: $entrees-anim-time;
+      } @else if ($foodContainerDelay) and ($name == "desserts") {
+        animation-delay: $entrees-anim-time + $plats-anim-time;
+      } @else {
+        animation-delay: ($topic-anim-delay * 0);
+      }
+    }
+
+    &:nth-child(n + 2) {
+      @if ($foodContainerDelay) and ($name == "plats") {
+        animation-delay: $entrees-anim-time + ($topic-anim-delay * 1);
+      } @else if ($foodContainerDelay) and ($name == "desserts") {
+        animation-delay: $entrees-anim-time +
+          $plats-anim-time +
+          ($topic-anim-delay * 1);
+      } @else {
+        animation-delay: ($topic-anim-delay * 1);
+      }
+    }
+
+    &:nth-child(n + 3) {
+      @if ($foodContainerDelay) and ($name == "plats") {
+        animation-delay: $entrees-anim-time + ($topic-anim-delay * 2);
+      } @else if ($foodContainerDelay) and ($name == "desserts") {
+        animation-delay: $entrees-anim-time +
+          $plats-anim-time +
+          ($topic-anim-delay * 2);
+      } @else {
+        animation-delay: ($topic-anim-delay * 2);
+      }
+    }
+
+    &:nth-child(n + 4) {
+      @if ($foodContainerDelay) and ($name == "plats") {
+        animation-delay: $entrees-anim-time + ($topic-anim-delay * 3);
+      } @else if ($foodContainerDelay) and ($name == "desserts") {
+        animation-delay: $entrees-anim-time +
+          $plats-anim-time +
+          ($topic-anim-delay * 3);
+      } @else {
+        animation-delay: ($topic-anim-delay * 3);
+      }
+    }
+
+    &--presentation {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 3vw;
+      width: 80%;
+      transition: all $on-hover-anim-duration ease-in-out;
+      & h3 {
+        display: block;
+        font-size: 3.9vw;
+        margin-bottom: 0.8vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      & p {
+        display: block;
+        font-size: 3.5vw;
+        color: gray;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    &--price {
+      border-radius: 0 4vw 4vw 0;
+      display: flex;
+      align-items: center;
+      width: $price-width;
+      color: black;
+      width: 20%;
+      height: 100%;
+      font-weight: bold;
+      transform: translateX(20%);
+      transition: all $on-hover-anim-duration ease-in-out;
+      & span {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
         width: 100%;
-        margin: 0 auto;
+        height: 100%;
+        padding-bottom: 2vw;
+        padding-right: 15vw;
+        font-size: 4vw;
+        transform: translateX(0%);
+        transition: all $on-hover-anim-duration ease-in-out;
+      }
+      &--back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 0%;
+        height: 100%;
+        background-color: $color-animation;
+        transition: all $on-hover-anim-duration ease-in-out;
+        & i {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          font-size: 9vw;
+          color: $color-animation;
+          color: white;
+          background: transparent;
+          transform: rotate(-1300deg) scale(0.25);
+          transition: all $on-hover-anim-duration ease-in-out;
+        }
+      }
     }
+    &:hover .#{$name}--topic--presentation {
+      width: 65%;
+    }
+    &:hover .#{$name}--topic--price {
+      width: 35%;
+      transform: translateX(0%);
+      & span {
+        width: 30%;
+        transform: translateX(0%);
+        padding-right: 2vw;
+        padding-bottom: 2vw;
+      }
+      & .#{$name}--topic--price--back {
+        width: 70%;
+        background-color: $color-animation;
+        & i {
+          color: white;
+          background-color: $color-animation;
+          transform: rotate(0deg) scale(1);
+        }
+      }
+    }
+  }
+
+  @media all and (min-width: 576px) {
+    width: 49%;
+    @if $name == "desserts" {
+      width: 100%;
+    }
+    padding: 2vw 0vw;
+    & h2 {
+      font-size: 2.5vw;
+      padding-bottom: 2.5vw;
+      position: relative;
+      font-weight: 400;
+    }
+    & h2::after {
+      border-top: 0.45vw solid $color-animation;
+      top: 65%;
+      @if $name == "entrees" {
+        width: 12.5%;
+      }
+      @if $name == "plats" {
+        width: 8.5%;
+      }
+      @if $name == "desserts" {
+        width: 6.8%;
+      }
+    }
+    &--topic {
+      width: 100%;
+      height: 8vw;
+      margin-bottom: 1vw;
+      border-radius: 1.2vw;
+      &--presentation {
+        padding-left: 2vw;
+        width: 80%;
+        & h3 {
+          font-size: 2.5vw;
+        }
+        & p {
+          font-size: 2vw;
+        }
+      }
+      &--price {
+        width: 20%;
+        transform: translateX(40%);
+        @if $name == "desserts" {
+          transform: translateX(20%);
+        }
+        & span {
+          width: 100%;
+          font-size: 2vw;
+          padding-bottom: 1vw;
+          padding-right: 6vw;
+        }
+        &--back {
+          width: 0%;
+          & i {
+            font-size: 4vw;
+          }
+        }
+      }
+      &:hover .#{$name}--topic--presentation {
+        width: 65%;
+        @if $name == "desserts" {
+          width: 82.3%;
+        }
+      }
+      &:hover .#{$name}--topic--price {
+        width: 35%;
+        @if $name == "desserts" {
+          width: 17.7%;
+        }
+        & span {
+          padding-right: 0.5vw;
+          padding-bottom: 1vw;
+          width: 35%;
+          @if $name == "desserts" {
+            width: 35%;
+          }
+        }
+        & .#{$name}--topic--price--back {
+          width: 65%;
+          @if $name == "desserts" {
+            width: 65%;
+          }
+        }
+      }
+    }
+  }
+  @media all and (min-width: 1025px) {
+    width: 31%;
+    padding: 1vw 0vw;
+    & h2 {
+      font-size: 1.1vw;
+      padding-bottom: 1.3vw;
+      position: relative;
+      font-weight: 400;
+    }
+    & h2::after {
+      border-top: 0.2vw solid $color-animation;
+      top: 58%;
+      @if $name == "entrees" {
+        width: 9%;
+      }
+      @if $name== "plats" {
+        width: 6.5%;
+      }
+      @if $name == "desserts" {
+        width: 10%;
+      }
+    }
+
+    &--topic {
+      height: 4vw;
+      margin-bottom: 1vw;
+      border-radius: 0.6vw;
+
+      &--presentation {
+        padding-left: 1vw;
+        width: 80%;
+        & h3 {
+          font-size: 1.2vw;
+          margin-bottom: 0vw;
+        }
+        & p {
+          font-size: 1vw;
+        }
+      }
+      &--price {
+        width: 20%;
+        transform: translateX(40%);
+        & span {
+          font-size: 1vw;
+          padding-bottom: 0.5vw;
+          padding-right: 3.2vw;
+        }
+        &--back {
+          width: 0%;
+          & i {
+            font-size: 2vw;
+          }
+        }
+      }
+      &:hover .#{$name}--topic--presentation {
+        width: 70%;
+      }
+      &:hover .#{$name}--topic--price {
+        width: 30%;
+        & span {
+          padding-right: 0.5vw;
+          padding-bottom: 0.6vw;
+          width: 35%;
+        }
+        & .#{$name}--topic--price--back {
+          width: 65%;
+          background-color: $color-animation;
+        }
+      }
+    }
+  }
+}
+
+@mixin fonctionnementStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 11vw;
+  padding-bottom: 10vw;
+  width: 100%;
+  & h2 {
+    font-size: 6.5vw;
+    font-weight: bold;
+    padding-left: 5vw;
+    margin-bottom: 4vw;
+    width: 100%;
+  }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 87%;
+    z-index: 0;
+    &__link {
+      display: flex;
+      position: relative;
+      align-items: center;
+      width: 100%;
+      background-color: $grey-background2;
+      color: black;
+      margin-bottom: 3vw;
+      height: 17.5vw;
+      font-size: 4.5vw;
+      font-weight: 600;
+      border-radius: 5vw;
+      box-shadow: 1vw 1.5vw 2vw gainsboro;
+      text-decoration: none;
+      z-index: 0;
+      &__info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        background-color: $color-primary;
+        color: white;
+        border-radius: 50%;
+        height: 8vw;
+        width: 8vw;
+        font-size: 4vw;
+        top: 30%;
+        left: -3.5vw;
+        z-index: 0;
+      }
+      & i {
+        display: flex;
+        align-items: center;
+        font-size: 5vw;
+        color: black;
+        opacity: 0.7;
+        padding-left: 10vw;
+        padding-right: 3vw;
+        height: 100%;
+      }
+    }
+    &__link--active {
+      display: flex;
+      position: relative;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 4.5vw;
+      height: 19vw;
+      font-size: 4.5vw;
+      font-weight: 600;
+      border-radius: 5vw;
+      box-shadow: 1vw 1.5vw 2vw gainsboro;
+      text-decoration: none;
+      color: black;
+      background-color: $background-link-active;
+      &__info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        background-color: $color-primary;
+        color: white;
+        border-radius: 50%;
+        height: 8vw;
+        width: 8vw;
+        font-size: 4vw;
+        top: 30%;
+        left: -3.5vw;
+      }
+      & i {
+        display: flex;
+        align-items: center;
+        font-size: 5vw;
+        color: black;
+        color: $color-primary;
+        opacity: 0.7;
+        padding-left: 10vw;
+        padding-right: 3vw;
+        height: 100%;
+      }
+    }
+  }
+  @media all and (min-width: 576px) {
+    padding: 4vw 3vw;
+    & h2 {
+      font-size: 3.5vw;
+      padding-left: 0vw;
+      margin-bottom: 1.5vw;
+      width: 100%;
+    }
+    .menu {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      &__link {
+        width: 30.5%;
+        margin-bottom: 0vw;
+        font-size: 2vw;
+        border-radius: 2vw;
+        height: 9vw;
+        &__info {
+          font-size: 2vw;
+          top: 30%;
+          left: -2vw;
+          height: 4vw;
+          width: 4vw;
+        }
+        & i {
+          font-size: 2.2vw;
+          padding-left: 4vw;
+          padding-right: 1vw;
+        }
+      }
+      &__link--active {
+        width: 30.5%;
+        margin-bottom: 0vw;
+        font-size: 2vw;
+        border-radius: 2vw;
+        height: 9vw;
+        &__info {
+          font-size: 2vw;
+          top: 30%;
+          left: -2vw;
+          height: 4vw;
+          width: 4vw;
+        }
+        & i {
+          font-size: 2.2vw;
+          padding-left: 4vw;
+          padding-right: 1vw;
+        }
+      }
+    }
+  }
+
+  @media all and (min-width: 1025px) {
+    padding: 2vw 7vw;
+    & h2 {
+      font-size: 2vw;
+      padding-left: 0vw;
+      margin-bottom: 0.6vw;
+      width: 100%;
+    }
+    .menu {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      &__link {
+        width: 30.5%;
+        margin-bottom: 0vw;
+        font-size: 1.2vw;
+        border-radius: 0.8vw;
+        height: 5vw;
+
+        &__info {
+          font-size: 1.3vw;
+          top: 27%;
+          left: -1.4vw;
+          height: 2.5vw;
+          width: 2.5vw;
+        }
+        & i {
+          font-size: 1.5vw;
+          padding-left: 2.8vw;
+          padding-right: 1vw;
+        }
+      }
+      &__link--active {
+        width: 30.5%;
+        margin-bottom: 0vw;
+        font-size: 1.2vw;
+        border-radius: 0.8vw;
+        height: 5vw;
+        &__info {
+          font-size: 1.3vw;
+          top: 27%;
+          left: -1.4vw;
+          height: 2.5vw;
+          width: 2.5vw;
+        }
+        & i {
+          font-size: 1.5vw;
+          padding-left: 2.8vw;
+          padding-right: 1vw;
+        }
+      }
+    }
+  }
+}
+
+@mixin restaurantsStyle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 11vw;
+  padding-bottom: 10vw;
+  background-color: $grey-background2;
+  & h2 {
+    width: 100%;
+    padding-left: 5vw;
+    font-size: 6.5vw;
+    font-weight: bold;
+    margin-bottom: 5vw;
+  }
+  .presentation {
+    display: flex;
+    flex-direction: column;
+    width: 92%;
+    height: 280vw;
+    &__topic {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 65vw;
+      border-radius: $border-topic;
+      margin-bottom: 5vw;
+      text-decoration: none;
+      &.new::before {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        content: "Nouveau";
+        padding: 1.5vw 2.5vw;
+        border-radius: 1vw;
+        position: absolute;
+        background-color: $ticket-background-color;
+        color: $ticket-text-color;
+        width: 18%;
+        height: 5vw;
+        right: 10%;
+        margin-top: 3.5vw;
+        font-size: 4vw;
+      }
+      & img {
+        display: flex;
+        width: 100%;
+        height: 70%;
+        border-radius: $border-topic $border-topic 0vw 0vw;
+        object-fit: cover;
+      }
+      &__header {
+        display: flex;
+        align-items: center;
+        height: 30%;
+        &__text {
+          display: flex;
+          flex-direction: column;
+          width: 80%;
+          height: 100%;
+          background-color: white;
+          border-radius: 0 0 0 $border-topic;
+          padding-left: 4vw;
+          padding-top: 4vw;
+          & h3 {
+            font-size: 5vw;
+            color: black;
+          }
+          & p {
+            font-size: 4.8vw;
+            color: black;
+            font-weight: 100;
+          }
+        }
+        &__icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 25%;
+          height: 100%;
+          position: relative;
+          background-color: white;
+          border-radius: 0 0 $border-topic 0;
+          & i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            font-size: 6vw;
+            width: 55%;
+            height: 55%;
+            @include iconHoverEffect;
+          }
+        }
+      }
+    }
+  }
+
+  @media all and (min-width: 576px) {
+    width: 100%;
+    padding: 4vw 3vw;
+    & h2 {
+      padding-left: 0vw;
+      font-size: 3.5vw;
+      margin-bottom: 1.5vw;
+    }
+    .presentation {
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 0 2vw;
+      height: auto;
+      &__topic {
+        position: relative;
+        width: 47%;
+        height: 30vw;
+        margin-bottom: 3vw;
+        &.new::before {
+          padding: 0vw 2.5vw;
+          height: 13.5%;
+          border-radius: 1vw;
+          right: 5%;
+          margin-top: 1.5vw;
+          font-size: 2.1vw;
+        }
+        & img {
+          border-radius: 3vw 3vw 0vw 0vw;
+        }
+        &__header {
+          &__text {
+            width: 80%;
+            border-radius: 0 0 0 3vw;
+            padding: 1.3vw 2vw;
+            & h3 {
+              font-size: 3vw;
+            }
+            & p {
+              font-size: 2.4vw;
+            }
+          }
+          &__icon {
+            border-radius: 0 0 3vw 0;
+            & i {
+              font-size: 3.5vw;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media all and (min-width: 1025px) {
+    width: 100%;
+    padding: 2.5vw 7vw;
+    & h2 {
+      padding-left: 0vw;
+      font-size: 2vw;
+      margin-bottom: 1.4vw;
+    }
+    .presentation {
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 0 0vw;
+      height: auto;
+      &__topic {
+        width: 31.5%;
+        height: 19vw;
+        margin-bottom: 2.2vw;
+        &.new::before {
+          padding: 0vw 0.5vw;
+          height: 10%;
+          border-radius: 0.3vw;
+          right: 3.5%;
+          margin-top: 1vw;
+          font-size: 1vw;
+        }
+        & img {
+          border-radius: 1vw 1vw 0vw 0vw;
+        }
+        &__header {
+          &__text {
+            border-radius: 0 0 0 1vw;
+            padding: 1vw 1vw;
+            & h3 {
+              font-size: 1.5vw;
+            }
+            & p {
+              font-size: 1.2vw;
+            }
+          }
+          &__icon {
+            border-radius: 0 0 1vw 0;
+            & i {
+              font-size: 1.7vw;
+            }
+          }
+        }
+      }
+    }
+  }
 }
