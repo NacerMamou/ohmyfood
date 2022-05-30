@@ -14,17 +14,6 @@
 
 /*Spacing section*/
 /*animation timings section*/
-@keyframes loading {
-  0% {
-    opacity: 0;
-    transform: translateY(15%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0%);
-    visibility: visible;
-  }
-}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -361,6 +350,7 @@
   }
 }
 
+/****Header*****/
 #loader {
   display: flex;
   align-items: center;
@@ -598,6 +588,7 @@
     padding-right: 1vw;
   }
 }
+
 #restaurants {
   display: flex;
   flex-direction: column;
@@ -819,6 +810,19 @@
   }
 }
 
+/***Footer***/
+@keyframes loading {
+  0% {
+    opacity: 0;
+    transform: translateY(15%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+    visibility: visible;
+  }
+}
+/*****Header****/
 #list {
   display: flex;
   flex-direction: column;
@@ -1786,5 +1790,7 @@
     border-radius: 1.5vw;
   }
 }
+
+/****Footer****/
 
 /*# sourceMappingURL=main.css.map */
