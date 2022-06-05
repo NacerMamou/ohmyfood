@@ -1,9 +1,10 @@
 // This main file decribes the architecture of each page
-@import "./base/typography";
 @import "./utils/variables";
-@import "./utils/mixins";
+@import "./base/typography";
+
 @import "./components/buttons";
 @import "./components/loaders.scss";
+
 @import "./layout/header";
 @import "./layout/footer";
 

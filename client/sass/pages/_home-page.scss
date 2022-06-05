@@ -31,7 +31,7 @@
       font-size: 4.5vw;
       font-weight: 600;
       border-radius: 5vw;
-      box-shadow: 1vw 1.5vw 2vw gainsboro;
+      box-shadow: 0.8vw 0.8vw 2vw $shadow-color1;
       text-decoration: none;
       z-index: 0;
       &__info {
@@ -70,7 +70,7 @@
       font-size: 4.5vw;
       font-weight: 600;
       border-radius: 5vw;
-      box-shadow: 1vw 1.5vw 2vw gainsboro;
+      box-shadow: 0.8vw 0.8vw 2vw $shadow-color1;
       text-decoration: none;
       color: black;
       background-color: $background-link-active;
@@ -240,6 +240,7 @@
       border-radius: $border-topic;
       margin-bottom: 5vw;
       text-decoration: none;
+      box-shadow: 0.5vw 0.5vw 0.2vw $shadow-color1;
       &.new::before {
         display: flex;
         justify-content: center;
@@ -292,17 +293,32 @@
           align-items: center;
           width: 25%;
           height: 100%;
-          position: relative;
           background-color: white;
           border-radius: 0 0 $border-topic 0;
-          & i {
+          &__container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            font-size: 6vw;
-            width: 55%;
-            height: 55%;
+            position: relative;
+            width: 40%;
+            height: 40%;
+            & .layer1 {
+              position: absolute;
+              top: 0.5vw;
+              left: 1vw;
+              color: black;
+              z-index: -1;
+              font-size: 6vw;
+              transition: all 0.5s linear;
+            }
+            & .layer0 {
+              position: absolute;
+              top: 0.5vw;
+              left: 1vw;
+              color: black;
+              font-size: 6vw;
+              transition: all 0.5s linear;
+            }
+          }
+          &__container:hover {
             @include iconHoverEffect;
           }
         }
@@ -330,6 +346,8 @@
         width: 47%;
         height: 30vw;
         margin-bottom: 3vw;
+        border-radius: 3vw;
+        box-shadow: 0.3vw 0.3vw 0.1vw $shadow-color1;
         &.new::before {
           padding: 0vw 2.5vw;
           height: 13.5%;
@@ -355,8 +373,19 @@
           }
           &__icon {
             border-radius: 0 0 3vw 0;
-            & i {
-              font-size: 3.5vw;
+            &__container {
+              width: 45%;
+              height: 45%;
+              & .layer1 {
+                top: 0.2vw;
+                left: 0.5vw;
+                font-size: 3.3vw;
+              }
+              & .layer0 {
+                top: 0.2vw;
+                left: 0.5vw;
+                font-size: 3.3vw;
+              }
             }
           }
         }
@@ -382,6 +411,8 @@
         width: 31.5%;
         height: 19vw;
         margin-bottom: 2.2vw;
+        border-radius: 1vw;
+        box-shadow: 0.2vw 0.2vw 0.1vw $shadow-color1;
         &.new::before {
           padding: 0vw 0.5vw;
           height: 10%;
@@ -406,8 +437,19 @@
           }
           &__icon {
             border-radius: 0 0 1vw 0;
-            & i {
-              font-size: 1.7vw;
+            &__container {
+              width: 50%;
+              height: 50%;
+              & .layer1 {
+                top: 0.3vw;
+                left: 0.55vw;
+                font-size: 2vw;
+              }
+              & .layer0 {
+                top: 0.3vw;
+                left: 0.55vw;
+                font-size: 2vw;
+              }
             }
           }
         }

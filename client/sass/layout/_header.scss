@@ -45,7 +45,7 @@
       width: 100.5%;
       margin: 0;
     }
-    & a {
+    & button {
       position: absolute;
       top: 27%;
       right: 8vw;
@@ -105,7 +105,7 @@
       width: 45%;
       margin-bottom: 0;
     }
-    & a {
+    & button {
       font-size: 2.2vw;
       padding: 2vw;
       width: 30%;
@@ -224,18 +224,8 @@
       color: grey;
       margin-bottom: 7vw;
     }
-    & a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-weight: bold;
-      border-radius: 10vw;
-      background: linear-gradient(0deg, $color-primary, $color-secondary);
-      text-decoration: none;
-      cursor: pointer;
-      font-size: 3.7vw;
-      padding: 3.5vw;
+    & button {
+      @include explorationButton;
     }
   }
   // Styling the header image for restaurant pageq
